@@ -1,0 +1,73 @@
+{
+  "name": "worker-monitor",
+  "version": "1.0.0",
+  "description": "Kubernetes worker node monitoring system",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "watch": "tsc -w",
+    "lint": "eslint . --ext .ts",
+    "test":  "nyc --require ts-node/register mocha 'test/**/*.spec.ts'",
+    "test:watch": "mocha -r ts-node/register -p tsconfig.test.json 'test/**/*.spec.ts' --watch --watch-files src/**/*.ts,test/**/*.ts",
+    "coverage": "nyc report --reporter=text-lcov > coverage.lcov && nyc report --reporter=html",
+    "check-coverage": "nyc check-coverage --lines 80 --functions 80 --branches 80"
+  },
+  "dependencies": {
+    "@kubernetes/client-node": "^0.18.1",
+    "ping": "^0.4.4"
+  },
+  "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@types/chai": "^4.3.6",
+    "@types/mocha": "^10.0.2",
+    "@types/node": "^20.8.0",
+    "@types/ping": "^0.4.1",
+    "@types/sinon": "^10.0.18",
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "@typescript-eslint/parser": "^6.7.3",
+    "chai": "^4.3.10",
+    "eslint": "^8.50.0",
+    "mocha": "^10.2.0",
+    "nyc": "^17.1.0",
+    "sinon": "^16.0.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "keywords": [
+    "kubernetes",
+    "monitoring",
+    "workers",
+    "typescript",
+    "node"
+  ],
+  "author": "",
+  "license": "ISC",
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": true,
+    "all": true,
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "src/**/*.d.ts"
+    ],
+    "reporter": [
+      "html",
+      "lcov",
+      "text",
+      "text-summary"
+    ],
+    "report-dir": "coverage",
+    "branches": 80,
+    "lines": 80,
+    "functions": 80,
+    "statements": 80
+  }
+}
